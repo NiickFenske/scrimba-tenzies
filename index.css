@@ -3,6 +3,7 @@
 }
 
 body {
+    font-family: Inter, sans-serif;
     margin: 0;
     background-color: #0B2434;
     padding: 20px;
@@ -11,7 +12,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: Inter;
 }
 
 div#root {
@@ -27,14 +27,31 @@ main {
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+}
+
+.title {
+    font-size: 40px;
+    margin: 0;
+}
+
+.instructions {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin-top: 0;
+    text-align: center;
 }
 
 .dice-container {
     display: grid;
     grid-template: auto auto / repeat(5, 1fr);
-    gap: 20px
+    gap: 20px;
+}
+
+button {
+    font-family: Inter, sans-serif;
+    cursor: pointer;
 }
 
 .dice-container button {
@@ -44,8 +61,16 @@ main {
     border-radius: 10px;
     border: none;
     background-color: white;
-    font-family: Inter;
     font-size: 1.75rem;
     font-weight: bold;
-    cursor: pointer;
+}
+
+button.roll-dice {
+    height: 50px;
+    width: 100px;
+    border: none;
+    border-radius: 6px;
+    background-color: #5035FF;
+    color: white;
+    font-size: 1.2rem;
 }

@@ -1,29 +1,48 @@
 import React from 'react'
 import Die from './Die'
-    /**
-     * Challenge: Create a `Roll Dice` button that will re-roll
-     * all 10 dice
-     * 
-     * Clicking the button should generate a new array of numbers
-     * and set the `dice` state to that new array (thus re-rendering
-     * the array to the page)
-     */
 
 export default function App(){
   const [dice, setDice] = React.useState(generateAllNewDice())
 
+  const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
+
   function generateAllNewDice(){
-    const newDice = Array.from({ length: 10}, () => Math.ceil(Math.random() * 6))
+    const newDice = Array.from({ length: 10}, () => ({
+      value: Math.ceil(Math.random() * 6), 
+      isHeld: false
+    }))
     return newDice
   }
+  console.log(dice)
+  const diceElements = dice.map((dieObject, index) => (
+    <Die 
+      key={index} 
+      value={dieObject.value} 
+      isHeld={dieObject.isHeld} 
+      hold={() => hold(index)}
+    />
+  ))
 
-  const diceElements = dice.map(num => (<Die value={num} />))
+  function rollDice(){
+    setDice(prevDice => prevDice.map((die) => {
+      return die.isHeld ? die : { ...die, value: die.value = Math.ceil(Math.random() * 6)}
+    }))
+  }
+
+  function hold(index) {
+    setDice(prevDice => prevDice.map((die, i) => {
+        return i === index ? { ...die, isHeld: !die.isHeld } : die
+    }))
+  }
 
   return(
     <main>
+      <h1 className="title">Tenzies</h1>
+            <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
       <div className="dice-container">
         {diceElements}
       </div>
+      <button className="roll-dice" onClick={rollDice}>{gameWon ? "New Game" : "Roll"}</button>
     </main>
   )
 }
