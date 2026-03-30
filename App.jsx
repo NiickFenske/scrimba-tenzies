@@ -2,7 +2,7 @@ import React from 'react'
 import Die from './Die'
 
 export default function App(){
-  const [dice, setDice] = React.useState(generateAllNewDice())
+  const [dice, setDice] = React.useState(() => generateAllNewDice())
 
   const gameWon = dice.every(die => die.isHeld) && dice.every(die => die.value === dice[0].value)
 
@@ -24,9 +24,14 @@ export default function App(){
   ))
 
   function rollDice(){
-    setDice(prevDice => prevDice.map((die) => {
-      return die.isHeld ? die : { ...die, value: die.value = Math.ceil(Math.random() * 6)}
-    }))
+    if(gameWon){
+      setDice(generateAllNewDice())
+    }
+    else{
+      setDice(prevDice => prevDice.map((die) => {
+        return die.isHeld ? die : { ...die, value: die.value = Math.ceil(Math.random() * 6)}
+      }))
+    }
   }
 
   function hold(index) {
